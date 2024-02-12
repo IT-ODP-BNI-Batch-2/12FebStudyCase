@@ -61,8 +61,9 @@
             parseFloat(bunga),
             parseFloat(periode)
         );
-        totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;
-
+        isNaN(saving.calculateInterest()) ? totalElement.innerHTML = `Rp 0` : totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;
+        
+        
     }
 
 </script>
