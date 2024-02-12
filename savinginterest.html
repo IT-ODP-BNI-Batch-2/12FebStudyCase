@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Savings Calculator</title>
+</head>
+<body>
+<h1>Simple Savings Calculator</h1>
+<form id="savingsForm">
+    <label for="initialAmount">Jumlah Tabungan:</label>
+    <input type="number" id="initialAmount" required><br><br>
+    <label for="interestRate">Bunga (%):</label>
+    <input type="number" id="interestRate" required><br><br>
+    <label for="period">Jangka:</label>
+    <input type="number" id="period" required><br><br>
+    <button type="button" id="calculateBtn">Hitung Interest</button>
+</form>
+<div id="result"></div>
+
+<script>
+class SavingsCalculator {
+    constructor(initialAmount, interestRate, period) {
+        this._initialAmount = initialAmount;
+        this._interestRate = interestRate;
+        this._period = period;
+    }
+
+    get initialAmount() {
+        return this._initialAmount;
+    }
+
+    set initialAmount(value) {
+        this._initialAmount = value;
+    }
+
+    get interestRate() {
+        return this._interestRate;
+    }
+
+    set interestRate(value) {
+        this._interestRate = value;
+    }
+
+    get period() {
+        return this._period;
+    }
+
+    set period(value) {
+        this._period = value;
+    }
+
+    calculateInterest() {
+        const interest = this._initialAmount * (this._interestRate / 12 / 100) * this._period;
+        return interest;
+    }
+}
+
+function calculateInterest() {
+    const initialAmount = parseFloat(document.getElementById('initialAmount').value);
+    const interestRate = parseFloat(document.getElementById('interestRate').value);
+    const period = parseFloat(document.getElementById('period').value);
+
+    const calculator = new SavingsCalculator(initialAmount, interestRate, period);
+    const interest = calculator.calculateInterest();
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `<p>Interest earned: Rp. ${interest.toFixed(2)}</p>`;
+}
+
+document.getElementById('calculateBtn').addEventListener('click', calculateInterest);
+
+
+</script>
+</body>
+</html>
