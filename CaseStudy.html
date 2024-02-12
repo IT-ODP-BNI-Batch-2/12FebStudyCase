@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study Broh</title>
+    <h1>Calculator Bruh</h1>
+
+</head>
+<body>
+    <form action="">
+        <label for="rekening">Rekening tabungan:</label><br>
+        <input type="number" id="rekening" name="rekening"><br>
+        <label for="interest">Bunga citra Lestari:</label><br>
+        <input type="number" id="interest" name="interest"><br>
+        <label for="jangka">Masukkan jankga:</label><br>
+        <input type="number" id="jangka" name="jangka"><br>
+        <button type="button" onclick="kalku()">Kalkulasi</button>
+        <h2 id="jumlah"></h2>
+    </form>
+
+    <script>
+        class SavingsCalculator{
+            constructor(initialAmount, interestRate, period){
+                this._initialAmount = initialAmount
+                this._interestRate = interestRate
+                this._period = period
+            }
+
+            get initialAmount(){
+                return this._initialAmount
+            }
+
+            set initialAmount(value){
+                this._initialAmount = value
+            }
+
+            get interestRate(){
+                return this._interestRate
+            }
+
+            set interestRate(value){
+                this._interestRate = value
+            }
+
+            get period(){
+                return this._period
+            }
+
+            set period(value){
+                this._period = value
+            }
+
+            calculateInterest(){
+                return this._initialAmount * this._interestRate * this._period / 12
+            }
+        }
+
+        
+
+        function kalku(){
+            var nilaiAwal = document.getElementById("rekening").value
+            var bunga = document.getElementById("interest").value
+            var jangka = document.getElementById("jangka").value
+            var total = document.getElementById("jumlah")
+            let counting = new SavingsCalculator(parseFloat(nilaiAwal),parseFloat(bunga),parseFloat(jangka))
+            total.innerHTML = 'Total bro ' + counting.calculateInterest().toFixed(2)
+        }
+
+
+    </script>
+    
+</body>
+</html>
