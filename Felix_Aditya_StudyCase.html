@@ -8,6 +8,7 @@
   <!-- Tambahkan pustaka Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
   <h1>Savings Interest Calculator</h1>
   <form id="savingsForm">
@@ -56,7 +57,7 @@
 
       calculateInterest() {
         // Implementasi logika perhitungan bunga di sini
-        return (this.initialAmount * this._interestRate * this.period) / 12;
+        return (this.initialAmount * this._interestRate * this.period/12) / 100;
       }
 
       calculateYearlyInterest() {
