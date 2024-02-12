@@ -46,7 +46,7 @@
         }
 
         calculateInterest() {
-            return ((this._initialAmount * (this._interestRate / 100) * this._period) / 100)
+            return ((this._initialAmount * (this._interestRate / 100) * this._period) / 12)
         }
     }
     var totalElement = document.getElementById("total");
@@ -55,7 +55,7 @@
         let bunga = parseFloat(document.getElementById("bunga").value);
         let periode = parseFloat(document.getElementById("periode").value);
         let saving = new savingCalculator(jumlahTabungan, bunga, periode);
-        isNaN(saving.calculateInterest()) ? totalElement.innerHTML = `Rp 0` : totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;   
+        isNaN(saving.calculateInterest()) ? totalElement.innerHTML = `Rp 0` : totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;
     }
 
 </script>
