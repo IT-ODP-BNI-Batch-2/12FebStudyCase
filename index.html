@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Calculator</title>
+</head>
+<body>
+    <h1>Savings Calculator</h1>
+
+    <form id="calculatorForm">
+        <label for="initialAmount">Initial Amount:</label>
+        <input type="number" id="initialAmount" name="initialAmount" required><br><br>
+
+        <label for="interestRate">Interest Rate (in percent):</label>
+        <input type="number" id="interestRate" name="interestRate" required><br><br>
+
+        <label for="period">Period (in years):</label>
+        <input type="number" id="period" name="period" required><br><br>
+
+        <button type="button" onclick="calculateInterest()">Calculate Interest</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        class SavingsCalculator {
+            constructor(initialAmount, interestRate, period) {
+                this._initialAmount = initialAmount;
+                this._interestRate = interestRate;
+                this._period = period;
+            }
+
+            get initialAmount() {
+                return this._initialAmount;
+            }
+
+            set initialAmount(value) {
+                this._initialAmount = value;
+            }
+
+            get interestRate() {
+                return this._interestRate;
+            }
+
+            set interestRate(value) {
+                this._interestRate = value;
+            }
+
+            get period() {
+                return this._period;
+            }
+
+            set period(value) {
+                this._period = value;
+            }
+
+            calculateInterest() {
+                // Implement the interest calculation logic here
+                // Formula: Interest = P * r * t
+                return this._initialAmount * (this._interestRate / 1200) * this._period;
+            }
+        }
+
+        function calculateInterest() {
+            const initialAmount = parseFloat(document.getElementById('initialAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const period = parseFloat(document.getElementById('period').value);
+
+            const calculator = new SavingsCalculator(initialAmount, interestRate, period);
+            const interest = calculator.calculateInterest();
+
+            document.getElementById('result').innerHTML = 'Total Interest: ' + interest.toFixed(2);
+        }
+    </script>
+</body>
+</html>
