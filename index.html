@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Savings Calculator</title>
+</head>
 <body>
 
 <h2>Savings Calculator</h2>
 
-<form action="">
+<form>
   <label for="savings">Initial Savings:</label><br>
   <input type="number" id="savings" name="savings"><br>
   <label for="interest">Interest Rate (% Yearly):</label><br>
@@ -13,78 +16,50 @@
   <input type="number" id="period" name="period"><br>
   <br>
   <button type="button" onclick="runScript()">Calculate interest</button>
-  <br>
-  <br>
-  <h3 id="result"></h3>
 </form> 
-<div><canvas id="chart"></canvas> <!-- Tambahkan elemen untuk grafik
--->
-</div>
 
-</body>
+<h3 id="result"></h3>
+
+<canvas id="chart"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  class SavingsCalculator{
-    constructor(initialAmount, interestRate, period){
-        this._initialAmount = initialAmount;
-        this._interestRate = interestRate;
-        this._period = period;
+  class SavingsCalculator {
+    constructor(initialAmount, interestRate, period) {
+      this._initialAmount = initialAmount;
+      this._interestRate = interestRate;
+      this._period = period;
     }
 
-    get initialAmount(){
-        return this._initialAmount;
+    calculateInterest() {
+      return this._initialAmount * (this._interestRate / 100) * this._period;
     }
 
-    set initialAmount(value){
-        this._initialAmount = value;
-    }
-
-    get interestRate(){
-        return this._interestRate;
-    }
-
-    set interestRate(value){
-        this._interestRate = value;
-    }
-
-    get period(){
-        return this._period;
-    }
-
-    set period(value){
-        this._period = value;
-    }
-
-    calculateInterest(){
-      return this._initialAmount * (this._interestRate/100) * this._period
-    }
-
-    calculateYearlyInterest(){
+    calculateYearlyInterest() {
       const yearlyInterest = [];
       let totalAmount = this._initialAmount;
 
-      for (let year = 1; year <= this._period; year++){
-        const interest = (totalAmount * this._interestRate)/100;
+      for (let year = 1; year <= this._period; year++) {
+        const interest = (totalAmount * this._interestRate) / 100;
         totalAmount += interest;
-        yearlyInterest.push({ year, interest: interest.toFixed(2), totalAmount});
+        yearlyInterest.push({ year, interest: interest.toFixed(2), totalAmount });
       }
       return yearlyInterest;
     }
   }
 
-  class ChartManager{
-    constructor(){
+  class ChartManager {
+    constructor() {
       this.chart = null;
     }
 
-    createChart(data){
+    createChart(data) {
       const ctx = document.getElementById('chart').getContext('2d');
 
       this.chart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: data.map(entry => `Tahun $(entry.year)`),
+          labels: data.map(entry => `Year ${entry.year}`),
           datasets: [{
             label: 'Yearly Interest',
             data: data.map(entry => entry.interest),
@@ -100,24 +75,34 @@
         }
       });
     }
+
+    updateChart(data) {
+      this.chart.data.labels = data.map(entry => `Year ${entry.year}`);
+      this.chart.data.datasets[0].data = data.map(entry => entry.interest);
+      this.chart.update();
+    }
   }
 
+  const chartManager = new ChartManager();
 
-function runScript(){
-  var initialAmount = parseFloat(document.getElementById('savings').value);
-  var interestRate = parseFloat(document.getElementById('interest').value);
-  var period = parseFloat(document.getElementById('period').value);
+  function runScript() {
+    const initialAmount = parseFloat(document.getElementById('savings').value);
+    const interestRate = parseFloat(document.getElementById('interest').value);
+    const period = parseFloat(document.getElementById('period').value);
 
-  var calculator = new SavingsCalculator(initialAmount, interestRate, period);
-  var interest = calculator.calculateInterest();
-  //console.log(interest);
-  var resultElement = document.getElementById('result');
-  isNaN(interest) ? resultElement.innerHTML = `Rp 0` : resultElement.innerHTML = `Rp ${interest.toFixed(2)}`;
-  if (!chartManager.chart) {
-    chartManager.createChart(yearlyInterest);
-  } else {
-    chartManager.updateChart(yearlyInterest);
+    const calculator = new SavingsCalculator(initialAmount, interestRate, period);
+    const yearlyInterest = calculator.calculateYearlyInterest();
+    const interest = calculator.calculateInterest();
+
+    const resultElement = document.getElementById('result');
+    isNaN(interest) ? resultElement.innerHTML = `Rp 0` : resultElement.innerHTML = `Rp ${interest.toFixed(2)}`;
+
+    if (!chartManager.chart) {
+      chartManager.createChart(yearlyInterest);
+    } else {
+      chartManager.updateChart(yearlyInterest);
+    }
   }
-}
 </script>
+</body>
 </html>
