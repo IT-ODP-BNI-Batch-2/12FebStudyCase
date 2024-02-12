@@ -63,4 +63,5 @@ document
 
 function resetForm() {
   document.getElementById("tabungan-form").reset();
+  document.querySelector(".result").innerHTML = "";
 }
