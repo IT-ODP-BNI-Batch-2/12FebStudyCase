@@ -32,7 +32,7 @@
     <title>Kalkulator Bunga Tabungan</title>
   </head>
   <body class="centered">
-    <form id="tabungan-form" class="d-flex flex-column gap-2 mx-auto">
+    <form id="tabungan-form" class="tabungan-form d-flex flex-column gap-2">
       <div class="d-flex flex-column">
         <label for="jumlahTabungan"> Jumlah Tabungan </label>
         <input
@@ -80,8 +80,8 @@
       </div>
     </form>
 
-    <div>
-      <canvas id="chart"></canvas>
+    <div class="chart w-100 mt-4">
+      <canvas id="chart" class="w-100"></canvas>
     </div>
   </body>
 </html>
