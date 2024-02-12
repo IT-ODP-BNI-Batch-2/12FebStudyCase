@@ -53,7 +53,7 @@
 
             // Method to calculate interest
             calculateInterest() {
-                const interest = (this._initialAmount * this._interestRate * this._period) / 100;
+                const interest = (this._initialAmount * (this._interestRate / 100) * this._period) / 12;
                 return interest.toFixed(2);
             }
         }
