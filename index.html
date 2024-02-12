@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Savings Calculator</h2>
+
+<form action="">
+  <label for="savings">Initial Savings:</label><br>
+  <input type="number" id="savings" name="savings" value="Masukkan jumlah tabungan"><br>
+  <label for="interest">Interest Rate:</label><br>
+  <input type="number" id="interest" name="interest" value="Masukkan tingkat bunga"><br>
+  <label for="period">Period:</label><br>
+  <input type="number" id="period" name="period" value="Masukkan periode tabungan"><br>
+  <br>
+  <input type="submit" value="Calculate Interest">
+</form> 
+
+
+</body>
+
+<script>
+  class SavingsCalculator{
+    constructor(initialAmount, interestRate, period){
+        this._initialAmount = initialAmount;
+        this._interestRate = interestRate;
+        this._period = period;
+    }
+
+    get initialAmount(){
+        return this._initialAmount;
+    }
+
+    set initialAmount(value){
+        this._initialAmount = value;
+    }
+
+    get interestRate(){
+        return this._interestRate;
+    }
+
+    set interestRate(value){
+        this._interestRate = value;
+    }
+
+    get period(){
+        return this._period;
+    }
+
+    set period(value){
+        this._period = value;
+    }
+
+    calculateInterest(){
+        return this._initialAmount * this._interestRate * this._period
+    }
+}
+var initialAmount = document.getElementById("savings");
+var interestRate = document.getElementById("interest");
+var period = document.getElementById("period");
+
+
+</script>
+</html>
