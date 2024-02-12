@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <h2>Study Case Saving Calculator</h2>
+</head>
+
+<body>
+    <form>
+        <input id="jumlahTabungan" value="" placeholder="jumlah tabungan"></input> <br /><br />
+        <input id="bunga" value="" placeholder="bunga"></input> <br /><br />
+        <input id="periode" value="" placeholder="periode"></input> <br /><br />
+        <button type="button" onclick="calculate()">Hitung</button>
+        <h3 id="total"></h3>
+    </form>
+</body>
+<script>
+    class savingCalculator {
+        constructor(initialAmount, interestRate, period) {
+            this.initialAmount = initialAmount;
+            this.interestRate = interestRate;
+            this.period = period;
+        }
+
+        get initialAmount() {
+            return this._initialAmount;
+        }
+
+        set initialAmount(value) {
+            return this._initialAmount = value;
+        }
+
+        get interestRate() {
+            return this._interestRate;
+        }
+
+        set interestRate(value) {
+            return this._interestRate = value;
+        }
+
+        get period() {
+            return this._period;
+        }
+
+        set period(value) {
+            return this._period = value;
+        }
+
+        calculateInterest() {
+            return (this._initialAmount * this._interestRate * this._period)
+        }
+    }
+    var totalElement = document.getElementById("total");
+
+    function calculate() {
+        
+        var jumlahTabungan = document.getElementById("jumlahTabungan").value;
+        var bunga = document.getElementById("bunga").value;
+        var periode = document.getElementById("periode").value;
+        // let saving = new savingCalculator(jumlahTabungan, bunga, saving);
+        let saving = new savingCalculator(
+                parseFloat(jumlahTabungan),
+                parseFloat(bunga),
+                parseFloat(periode)
+            );
+        totalElement.innerHTML = saving.calculateInterest();
+    }
+
+</script>
+
+</html>
