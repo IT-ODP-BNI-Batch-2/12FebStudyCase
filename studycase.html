@@ -1,0 +1,53 @@
+<body>
+    <h1>Savings Interest Calculator</h1>
+    <form id="savingsForm">
+        <label for="initialAmount">Jumlah Tabungan:</label>
+        <input type="number" id="initialAmount" required><br><br>
+
+        <label for="interestRate">Tingkat Bunga (% per tahun):</label>
+        <input type="number" id="interestRate" required><br><br>
+
+        <label for="period">Periode Tabungan (tahun):</label>
+        <input type="number" id="period" required><br><br>
+
+        <button type="button" onclick="calculate()">Hitung</button>
+    </form>
+    <div id="result"></div>
+    <canvas id="chart" width="400" height="200"></canvas>
+    <!-- Tambahkan elemen untuk grafik -->
+
+    <script>
+        class SavingCalculator {
+            constructor(initialAmount, interestRate, period) {
+                this._initialAmount = initialAmount
+                this._interestRate = interestRate
+                this._period = period
+            }
+
+            get initialAmount() { return this._initialAmount }
+            set initialAmount(value) { this._initialAmount = value }
+
+            get interestRate() { return this._interestRate }
+            set interestRate(value) { this._interestRate = value }
+
+            get period() { return this._period }
+            set period(value) { this._period = value }
+
+            calculateInterest() {
+                return (this._initialAmount * this._interestRate * this._period) / 12
+            }
+
+        }
+        function calculate() {
+            let initialAmount = parseFloat(document.getElementById('initialAmount').value);
+            let interestRate = parseFloat(document.getElementById('interestRate').value);
+            let period = parseFloat(document.getElementById('period').value);
+
+            let calculator = new SavingCalculator(initialAmount, interestRate / 100, period)
+            let result = calculator.calculateInterest();
+
+            document.getElementById("result").innerHTML = "Jumlah bunga selama " + period + " tahun adalah: " + result;
+        }
+
+    </script>
+</body>
