@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saving Calculator</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h2>Calculator Tabungan</h2>
+        <div>
+            <label for="initialAmount">Jumlah Tabungan (Rp.):</label><br>
+            <input type="number" id="initialAmount" value="">
+        </div>
+        <div>
+            <label for="interestRate">Tingkat Bunga (%):</label><br>
+            <input type="number" id="interestRate" value="">
+        </div>
+        <div>
+            <label for="period">Periode (Bulan):</label><br>
+            <input type="number" id="period" value="">
+        </div>
+        <button id="calculateBtn">Hitung</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        
+        class SavingCalculator {
+    constructor(initialAmount, interestRate, period) {
+        this.initialAmount = initialAmount;
+        this.interestRate = interestRate;
+        this.period = period
+    }
+
+    get initialAmount() {
+        return this._initialAmount
+    }
+    set initialAmount(value) {
+        this._initialAmount = value
+    }
+
+    get interestRate() {
+        return this._interestRate
+    }
+    set interestRate(value) {
+        this._interestRate = value
+    }
+
+    get period() {
+        return this.period
+    }
+    set period(value) {
+        this.period = value
+    }
+
+    calculateTotal() {
+        const totalInterest = (this.initialAmount * this.interestRate * this.period/12) / 100
+        const totalAmount = this.initialAmount + totalInterest
+        return totalAmount
+    }
+}
+
+
+        document.getElementById("calculateBtn").addEventListener("click", function() {
+            let initialAmount = parseFloat(document.getElementById("initialAmount").value);
+            let interestRate = parseFloat(document.getElementById("interestRate").value);
+            let period = parseFloat(document.getElementById("period").value);
+
+            let calculator = new SavingCalculator(initialAmount, interestRate, period);
+            let total = calculator.calculateTotal();
+
+            document.getElementById("result").innerHTML = "Total tabungan setelah " + period + " bulan: Rp. " + total.toFixed(2);
+        });
+    </script>
+</body>
+</html>
