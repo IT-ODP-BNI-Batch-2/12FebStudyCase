@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Case Study 1 - Savings Calculator</title>
+</head>
+<body>
+    <h1 id="judul">Kalkulator Tabungan!</h1>
+    <form action="">
+        <label for="savings">Initial Savings:</label><br>
+        <input type="number" id="initialAmount" name="savings" placeholder="Masukkan Jumlah Tabungan"><br>
+        <br>
+        <label for="interest">Interest Rate:</label><br>
+        <input type="number" id="interestRate" name="interest" placeholder="Masukkan tingkat suku bunga"><br>
+        <br>
+        <label for="period">Period:</label><br>
+        <input type="number" id="period" name="period" placeholder="Masukkan jangka waktu (bulan)"><br>
+        <br>
+        <br>
+        <button type="button" onclick="calculate()" >Hitung</button>
+        <h2 id="totalBunga"></h2>
+    </form>
+
+    <script>
+        class SavingsCalculator {
+            constructor(initialAmount, interestRate, period) {
+                this._initialAmount = initialAmount
+                this._interestRate = interestRate
+                this._period = period
+            }
+
+            get initialAmount() {
+                return this._InitialAmount
+            }
+
+            set initialAmount(value) {
+                this._initialAmount = value
+            }
+
+            get interestRate() {
+                return this._interestRate
+            }
+
+            set interestRate(value) {
+                this._interestRate = value
+            }
+
+            get period() {
+                return this._period
+            }
+
+            set period(value) {
+                this._period = value
+            }
+
+            calculateInterest() {
+                let total = ((this._initialAmount * (this._interestRate/100) * this._period) / 12)
+                console.log(this._initialAmount)
+                console.log(this._interestRate)
+                console.log(this._period)
+                return total.toFixed(2);
+            }
+        }
+
+        function calculate() {
+            let initialAmount = parseFloat(document.getElementById("initialAmount").value)
+            let interestRate = parseFloat(document.getElementById("interestRate").value)
+            let period = parseFloat(document.getElementById("period").value)
+            var total = document.getElementById("totalBunga")
+            
+            let calculator = new SavingsCalculator(initialAmount, interestRate, period)
+
+            let interest = calculator.calculateInterest()
+            total.innerHTML = 'Interest: ' + interest
+            // console.log(interest)
+
+            //const resultElement = document.getElementById("result")
+
+            //resultElement.innerHTML = Interest Earned: $$ {interest.ToFixed(2)}
+
+            // document.getElementById('interest').innerHTML = Interest: Rp ${interest}
+
+        }
+    </script>
+</body>
+</html>
