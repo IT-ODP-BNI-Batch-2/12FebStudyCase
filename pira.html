@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator Bunga Tabungan</title>
+  </head>
+  <body>
+    <div>
+      <h2>Kalkulator Bunga Tabungan</h2>
+      <div>
+        <label for="initialAmount">Jumlah Tabungan (Rp):</label>
+        <input type="number" id="initialAmount" value="" required />
+      </div>
+      <div>
+        <label for="interestRate">Tingkat Bunga (% per tahun):</label>
+        <input type="number" id="interestRate" value="" required />
+      </div>
+      <div>
+        <label for="period">Periode Tabungan (tahun):</label>
+        <input type="number" id="period" value="" required />
+      </div>
+      <button id="calculateBtn">Calculate Interest</button>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      class SavingsCalculator {
+        constructor(initialAmount, interestRate, period) {
+          this._initialAmount = initialAmount;
+          this._interestRate = interestRate;
+          this._period = period;
+        }
+
+        get initialAmount() {
+          return this._initialAmount;
+        }
+        set initialAmount(value) {
+          this._initialAmount = value;
+        }
+
+        get interestRate() {
+          return this._interestRate;
+        }
+        set interestRate(value) {
+          this._interestRate = value;
+        }
+
+        get period() {
+          return this._period;
+        }
+        set period(value) {
+          this._period = value;
+        }
+
+        hitungBunga() {
+          const totalBunga =
+            (this._initialAmount * this._interestRate * this._period) / 100;
+          const totalTabungan = this._initialAmount + totalBunga;
+          return totalBunga;
+        }
+      }
+
+      document
+        .getElementById("calculateBtn")
+        .addEventListener("click", function () {
+          let initialAmount = parseFloat(
+            document.getElementById("initialAmount").value
+          );
+          let interestRate = parseFloat(
+            document.getElementById("interestRate").value
+          );
+          let period = parseFloat(document.getElementById("period").value);
+
+          if (isNaN(initialAmount) || isNaN(interestRate) || isNaN(period)) {
+            document.getElementById("result").innerHTML =
+              '<p style="color: red;">Harap isi semua input dengan angka.</p>';
+            return;
+          }
+
+          let kalkulator = new SavingsCalculator(
+            initialAmount,
+            interestRate,
+            period
+          );
+          let bunga = kalkulator.hitungBunga();
+
+          document.getElementById("result").innerHTML =
+            "Total bunga setelah " + period + " tahun: Rp" + bunga.toFixed(2);
+        });
+    </script>
+  </body>
+</html>
