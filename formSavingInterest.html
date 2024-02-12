@@ -1,28 +1,36 @@
-<html>
-    <head>
-        <title>Calculator Saving</title>
-    </head>
-    <body>
-        <h1>Mari Berhitung</h1>
-        <form action="">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mari Berhitung</title>
+</head>
+<body>
+    <div >
+        <h2>Calculator Tabungan</h2>
+        <div>
             <label for="nama"> Masukkan Nama : </label><br>
-            <input type="nama"><br>   
-
-            <label for="tabungan"> Masukkan Jumlah Tabungan : </label><br>
-            <input type="number" id="tabungan" name="tabungan"><br>
-
-            <label for="bunga">Masukkan Jumlah Bunga :</label><br>
-            <input type="number" id="bungaTab" name="bungaTabungan"><br>
-
-            <label for="period">Jangka Waktu :</label><br>
-            <input type="number" id="periodTab" name="periodeTabungan"><br>
-        </form>
-        <button>Hitung Tabungan</button>
-        
+            <input type="nama"><br>
+        </div>
+        <div>
+            <label for="tabungan">Jumlah Tabungan (Rp.):</label><br>
+            <input type="number" id="tabungan" name="tabungan">
+        </div>
+        <div>
+            <label for="bungaTab">Jumlah Bunga (%):</label><br>
+            <input type="number" id="bungaTab" name="bungaTabungan">
+        </div>
+        <div>
+            <label for="periodTab">Periode (Bulan):</label><br>
+            <input type="number" id="periodTab" name="periodeTabungan">
+        </div>
+        <button id="hitungTab">Hitung Tabungan</button>
+        <div id="hasil"></div>
+        </div>
         <script>
-            var jmlTabungan = document.getElementById("tabungan")
-            var jmlBunga = document.getElementById("bungaTab")
-            var jangkaWaktu = document.getElementById("periodTab")
+            // var jmlTabungan = document.getElementById("tabungan")
+            // var jmlBunga = document.getElementById("bungaTab")
+            // var jangkaWaktu = document.getElementById("periodTab")
 
             class SavingCalculator {
                 constructor(initialAmount, interestRate, period) {
@@ -39,10 +47,43 @@
                     this.initialAmount = value;
                 }
 
-                get initialRate() {
-                    return this.initialRate
+                get interestRate() {
+                    return this.interestRate;
+                }
+
+                set interestRate(value) {
+                    this.interestRate
+                }
+
+                get period() {
+                    return this.period;
+                }
+
+                set period(value) {
+                    this.period = value;
+                }
+
+                calculateTotal() {
+                    totalInterest = (this.initialAmount * this.interestRate * this.period)/100
+                    const totalAmount = this.initialAmount + totalInterest;
+                    return totalAmount;
+
                 }
             }
+            document.getElementById("hitungTab").addEventListener("click", function() {
+
+            let initialAmount = parseFloat(document.getElementById("tabungan").value);
+            let interestRate = parseFloat(document.getElementById("bungaTab").value);
+            let period = parseFloat(document.getElementById("periodTab").value);
+
+            let calculator = new SavingCalculator(initialAmount, interestRate, period);
+            let total = calculator.calculateTotal();
+
+            let hasilHitung = document.getElementById("hasil")
+            hasilHitung.innerHTML = "jumlah tabungan " + total.toFixed(2);
+
+            // document.getElementById("hasil").innerHTML = "Bunga tabungan setelah " + period + " tahun: " + total.toFixed(2);
+        });    
 
         </script>
     </body>
