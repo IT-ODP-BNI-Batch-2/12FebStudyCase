@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Bunga Tabungan</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: calc(100% - 18px);
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px 20px;
+            background-color: #ff9e0c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ffa726;
+        }
+
+        #hasilBunga {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+        }
+
+        #myChart {
+            width: 80%;
+            max-width: 800px;
+            margin: 30px auto;
+            display: block;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h2>Kalkulator Bunga Tabungan</h2>
+    <form id="calculatorForm">
+        <label for="jumlahTabungan">Jumlah Tabungan:</label>
+        <input type="number" id="jumlahTabungan" name="jumlahTabungan" required>
+        
+        <label for="bungaPerTahun">Bunga Per Tahun:</label>
+        <input type="number" id="bungaPerTahun" name="bungaPerTahun" required>
+        
+        <label for="jangkaWaktu">Jangka Waktu dalam bulan:</label>
+        <input type="number" id="jangkaWaktu" name="jangkaWaktu" required>
+
+        <button type="button" onclick="hitungBunga()">Hitung Bunga Tabungan</button>
+    </form>
+
+    <p id="hasilBunga"></p>
+
+    <canvas id="myChart"></canvas>
+
+    <script>
+        function drawChart(data) {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Array.from({length: 12}, (_, i) => `Bulan ${i + 1}`),
+                    datasets: [{
+                        label: 'Total Bunga per Bulan',
+                        data: data,
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)', // Mengubah warna menjadi oranye
+                        borderColor: 'rgba(255, 159, 64, 1)', // Mengubah warna border
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function hitungBunga() {
+            var jumlahTabungan = parseFloat(document.getElementById('jumlahTabungan').value);
+            var bungaPerTahun = parseFloat(document.getElementById('bungaPerTahun').value);
+            var jangkaWaktu = parseFloat(document.getElementById('jangkaWaktu').value);
+
+            var bungaPerBulan = ((jumlahTabungan * bungaPerTahun * jangkaWaktu / 100) / 12);
+            var totalBunga = bungaPerBulan * 12; // Total bunga selama setahun
+
+            var data = Array.from({length: 12}, (_, i) => (i + 1) * bungaPerBulan);
+
+            document.getElementById('hasilBunga').innerHTML = "Bunga tabungan yang akan diterima perbulan: IDR. " + bungaPerBulan.toFixed(2) + "<br>Total bunga selama setahun: IDR. " + totalBunga.toFixed(2);
+            drawChart(data);
+        }
+    </script>
+</body>
+</html>
