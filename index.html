@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Savings Calculator</title>
+    <title>Savings Interest Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <h1>Savings Calculator</h1>
+    <h1>Savings Interest Calculator</h1>
 
-    <form id="calculatorForm">
+    <form id="savingsForm">
         <label for="initialAmount">Initial Amount:</label>
         <input type="number" id="initialAmount" name="initialAmount" required><br><br>
 
@@ -24,6 +25,8 @@
     </form>
     <h2>Result</h2>
     <div id="result"></div>
+    <canvas id="chart" width="400" height="200"></canvas>
+
 
     <script>
         class SavingsCalculator {
@@ -62,6 +65,55 @@
                 // Formula: Interest = P * r * t
                 return this._initialAmount * (this._interestRate / 1200) * this._period;
             }
+
+            calculateYearlyInterest() {
+                const yearlyInterest = []
+                let totalAmount = this._initialAmount
+
+                for (let year = 1; year <= this._period; year++) {
+                    const interest = (totalAmount * this._interestRate) / 100
+                    totalAmount += interest
+                    let nowYear = year
+                    yearlyInterest.push({
+                        year: nowYear, interest: interest.toFixed(2), totalAmount: new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR',
+                        }).format(totalAmount.toFixed(2))
+                    })
+                }
+
+                return yearlyInterest
+            }
+        }
+
+        class ChartManager {
+            constructor() {
+                this.chart = null
+            }
+
+            createChart(data) {
+                const ctx = document.getElementById("chart")
+                this.chart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: data.map(entry => `${entry.year}`),
+                        datasets: [{
+                            label: "Yearly Interest",
+                            data: data.map(entry => entry.interest),
+                            backgroundColor: "rgba(75, 192, 192, 0.2)",
+                            borderColor: "rgba(75, 192, 192, 1)",
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            }
         }
 
         function calculateInterest() {
@@ -70,10 +122,19 @@
             const period = parseFloat(document.getElementById('period').value);
 
             const calculator = new SavingsCalculator(initialAmount, interestRate, period);
+            const chartManager = new ChartManager()
             const interest = calculator.calculateInterest();
+            const yearlyInterest = calculator.calculateYearlyInterest()
 
-            document.getElementById('result').innerHTML = 'Total Interest: ' + interest.toFixed(2);
+            document.getElementById('result').innerHTML = `Total Interest Earned: ${yearlyInterest[yearlyInterest.length - 1].totalAmount}`;
+
+            if (!chartManager.chart) {
+                chartManager.createChart(yearlyInterest);
+            } else {
+                chartManager.updateChart(yearlyInterest);
+            }
         }
+
     </script>
 </body>
 
