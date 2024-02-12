@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator Saving</title>
+    </head>
+
+    <body>
+        <h1 id="judul">Selamat datang!</h1>
+
+        <script>
+            {/* Mengakses elemen berdasarkan ID */}
+            var judulElemen = document.getElementById("judul");
+    
+            judulElemen.innerHTML = "Kalkulator Tabungan!";
+        </script>
+
+        <form>
+            <label for="initialAmount">Jumlah Tabungan (Rp) </label><br>
+            <input type="number" id="initialAmount" name="initialAmount"><br><br>
+            <label for="interestRate">Tingkat Bunga (%) per tahun</label><br>
+            <input type="number" id="interestRate" name="interestRate"><br><br>
+            <label for="period">Periode Tabungan (bulan) </label><br>
+            <input type="number" id="period" name="period"><br><br>
+            <button type="button" onclick="calculate()">Hitung Tabungan</button>
+        </form>
+
+        <div id="total"></div>
+
+        <script>
+            class SavingsCalculator {
+                constructor(initialAmount, interestRate, period) {
+                    this._initialAmount = initialAmount;
+                    this._interestRate = interestRate;
+                    this._period = period;
+                }
+
+                get initialAmount() {
+                    return this._initialAmount;
+                }
+
+                set initialAmount(value) {
+                    this._initialAmount = value;
+                }
+
+                get interestRate() {
+                    return this._interestRate;
+                }
+
+                set interestRate(value) {
+                    this._interestRate = value;
+                }
+
+                get period() {
+                    return this._period;
+                }
+
+                set period(value) {
+                    this._period = value;
+                }
+
+                calculate() {
+                    return (this._initialAmount * (this._interestRate/12) * this._period)
+                }
+            }
+
+            function calculate() {
+                let initialAmount = parseFloat(document.getElementById("initialAmount").value);
+                let interestRate = parseFloat(document.getElementById("interestRate").value);
+                let period = parseFloat(document.getElementById("period").value);
+                let savingsCalculator = new SavingsCalculator(initialAmount,interestRate,period);
+
+                document.getElementById("total").innerText = "Jumlah Tabungan: Rp " + savingsCalculator.calculate().toFixed(2);
+            }
+
+        </script>
+    </body>
+</html>
