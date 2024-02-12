@@ -6,10 +6,10 @@
 
 <body>
     <form>
-        <input id="jumlahTabungan" value="" placeholder="jumlah tabungan"></input> <br /><br />
-        <input id="bunga" value="" placeholder="bunga"></input> <br /><br />
-        <input id="periode" value="" placeholder="periode"></input> <br /><br />
-        <button type="button" onclick="calculate()">Hitung</button>
+        <input id="jumlahTabungan" type="number" placeholder="jumlah tabungan"></input> <br /><br />
+        <input id="bunga" type="number" placeholder="bunga"></input> <br /><br />
+        <input id="periode" type="number" placeholder="periode"></input> <br /><br />
+        <button type="button" onclick="calculate()">Calculate Interest</button>
         <h3 id="total"></h3>
     </form>
 </body>
@@ -56,7 +56,6 @@
         var jumlahTabungan = document.getElementById("jumlahTabungan").value;
         var bunga = document.getElementById("bunga").value;
         var periode = document.getElementById("periode").value;
-        // let saving = new savingCalculator(jumlahTabungan, bunga, saving);
         let saving = new savingCalculator(
                 parseFloat(jumlahTabungan),
                 parseFloat(bunga),
