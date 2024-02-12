@@ -46,7 +46,7 @@
         }
 
         calculateInterest() {
-            return (this._initialAmount * this._interestRate * this._period)
+            return (this._initialAmount * (this._interestRate/12) * this._period)
         }
     }
     var totalElement = document.getElementById("total");
@@ -61,7 +61,12 @@
                 parseFloat(bunga),
                 parseFloat(periode)
             );
-        totalElement.innerHTML = saving.calculateInterest();
+        if (document.getElementById("total").value){
+            totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;
+        } else {
+            totalElement.innerHTML = "Rp 0";
+        }
+        
     }
 
 </script>
