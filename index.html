@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Calculator</title>
+</head>
+<body>
+    <h1>Savings Calculator</h1>
+    <form id="savings-form">
+        <label for="initialAmount">Initial Amount:</label>
+        <input type="number" id="initialAmount" required><br>
+        <label for="interestRate">Interest Rate (%):</label>
+        <input type="number" id="interestsRate" required><br>
+        <label for="period">Period (years):</label>
+        <input type="number" id="period" required><br>
+        <button type="submit">Calculate Interest</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+    class SavingCalculator {
+        constructor(initialAmount, interestRate, period){
+        this._initialAmount = initialAmount;
+        this._interestRate = interestRate;
+        this._period = period;
+
+    }
+    get initialAmount(){
+        return this._initialAmount;
+    }
+    set initialAmount(value){
+        this._initialAmount = value;
+
+    }
+    get interestRate(){
+        return this._interestRate;
+
+    }
+    set interestRate(value){
+        this._interestRate = value;
+    }
+
+    get period(){
+        return this._period;
+    }
+    set period(value){
+        this._period=value;
+
+    }
+    calculateInterest(){
+        const totalInterest = this._initialAmount * (this._interestRate / 100) * this._period;
+        return totalInterest;
+    }
+}
+
+
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('savings-form');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const initialAmount = parseFloat(document.getElementById('initialAmount').value);
+        const interestRate = parseFloat(document.getElementById('interestRate').value);
+        const period = parseFloat(document.getElementById('period').value);
+
+        const calculator = new SavingsCalculator(initialAmount, interestRate, period);
+        const interest = calculator.calculateInterest();
+
+        resultDiv.textContent = `Total interest earned: $${interest.toFixed(2)}`;
+    });
+});
+
+
+    </script>
+</body>
+</html>
