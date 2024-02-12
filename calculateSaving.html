@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Savings Calculator</title>
+</head>
+<body>
+    <form id="savingsForm">
+        <label for="initialAmount">Initial Amount($): </label>
+        <input type="number" id="initialAmount" required step="0.01">
+    
+        <br>
+    
+        <label for="annualInterestRate">Interest Rate (%): </label>
+        <input type="number" id="interestRate" required step="0.01">
+    
+        <br>
+    
+        <label for="savingPeriod">Periode: </label>
+        <input type="number" id="period" required step="1">
+    
+        <br>
+    
+        <button type="button" onclick="calculateInterest()">Hitung</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        class SavingsCalculator {
+            constructor(initialAmount, interestRate, period) {
+                this._initialAmount = initialAmount;
+                this._interestRate = interestRate;
+                this._period = period;
+            }
+        
+            get initialAmount() {
+                return this._initialAmount;
+            }
+        
+            set initialAmount(value) {
+                this._initialAmount = value;
+            }
+        
+            get interestRate() {
+                return this._interestRate;
+            }
+        
+            set interestRate(value) {
+                this._interestRate = value;
+            }
+        
+            get period() {
+                return this._period;
+            }
+        
+            set period(value) {
+                this._period = value;
+            }
+        
+            calculateInterest() {
+                return this._initialAmount * (this._interestRate/12) * this._period;
+            }
+        }
+        
+        function calculateInterest() {
+            let savingsCalculator = new SavingsCalculator(parseFloat(document.getElementById("initialAmount").value), parseFloat(document.getElementById("interestRate").value), parseFloat(document.getElementById("period").value));
+            document.getElementById("result").innerText = "Jumlah bunga yang dihasilkan: " + savingsCalculator.calculateInterest().toFixed(2);
+        }
+    </script>
+</body>
+</html>
