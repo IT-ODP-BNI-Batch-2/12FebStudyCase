@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Calculator Saving</title>
+    </head>
+    <body>
+        <h1>Mari Berhitung</h1>
+        <form action="">
+            <label for="nama"> Masukkan Nama : </label><br>
+            <input type="nama"><br>   
+
+            <label for="tabungan"> Masukkan Jumlah Tabungan : </label><br>
+            <input type="number" id="tabungan" name="tabungan"><br>
+
+            <label for="bunga">Masukkan Jumlah Bunga :</label><br>
+            <input type="number" id="bungaTab" name="bungaTabungan"><br>
+
+            <label for="period">Jangka Waktu :</label><br>
+            <input type="number" id="periodTab" name="periodeTabungan"><br>
+        </form>
+        <button>Hitung Tabungan</button>
+        
+        <script>
+            var jmlTabungan = document.getElementById("tabungan")
+            var jmlBunga = document.getElementById("bungaTab")
+            var jangkaWaktu = document.getElementById("periodTab")
+
+            class SavingCalculator {
+                constructor(initialAmount, interestRate, period) {
+                    this.initialAmount = initialAmount;
+                    this.interestRate = interestRate;
+                    this.period = period
+                }
+
+                get initialAmount() {
+                    return this.initialAmount;
+                }
+
+                set initialAmount(value) {
+                    this.initialAmount = value;
+                }
+
+                get initialRate() {
+                    return this.initialRate
+                }
+            }
+
+        </script>
+    </body>
+</html>
