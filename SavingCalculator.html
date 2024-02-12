@@ -46,27 +46,23 @@
         }
 
         calculateInterest() {
-            return (this._initialAmount * (this._interestRate/12) * this._period)
+            return (this._initialAmount * (this._interestRate / 12) * this._period)
         }
     }
     var totalElement = document.getElementById("total");
 
     function calculate() {
-        
+
         var jumlahTabungan = document.getElementById("jumlahTabungan").value;
         var bunga = document.getElementById("bunga").value;
         var periode = document.getElementById("periode").value;
         let saving = new savingCalculator(
-                parseFloat(jumlahTabungan),
-                parseFloat(bunga),
-                parseFloat(periode)
-            );
-        if (document.getElementById("total").value){
-            totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;
-        } else {
-            totalElement.innerHTML = "Rp 0";
-        }
-        
+            parseFloat(jumlahTabungan),
+            parseFloat(bunga),
+            parseFloat(periode)
+        );
+        totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;
+
     }
 
 </script>
