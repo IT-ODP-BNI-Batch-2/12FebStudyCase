@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <title>Case Study 1 - Savings Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1 id="judul">Kalkulator Tabungan!</h1>
@@ -62,19 +63,72 @@
             }
         }
 
+        calculateYearlyInterest() {
+                const yearlyInterest = []
+                let totalAmount = this._initialAmount
+
+                for(let year = 1; year<=this._period; year++){
+                    const interest = (totalAmount * this._interestRate) / 100
+                    totalAmount = totalAmount + interest
+                    yearlyInterest.push({year:year, interest: interest.toFixed(2), totalAmount: totalAmount})
+                }
+
+                return yearlyInterest
+            }
+        
+
+        class ChartManager{
+            constructor(){
+                this.chart = null
+            }
+        
+            createChart(data){
+                const ctx = document.getElementById("chart")
+                this.chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.map(entry => 'Year ' + entry.year),
+                        datasets: [{
+                            label: 'Yearly interest',
+                            data: data.map(entry => entry.interest),
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            }
+        }
+    
+        const chartManager = new ChartManager()
+
         function calculate() {
             let initialAmount = parseFloat(document.getElementById("initialAmount").value)
             let interestRate = parseFloat(document.getElementById("interestRate").value)
             let period = parseFloat(document.getElementById("period").value)
             var total = document.getElementById("totalBunga")
-            
             let calculator = new SavingsCalculator(initialAmount, interestRate, period)
-
             let interest = calculator.calculateInterest()
             total.innerHTML = 'Interest: ' + interest
-           
+        
+            const yearlyInterest = counting.calculateYearlyInterest();
+            document.getElementById('result').innerHTML = `Total Interest Earned:$${yearlyInterest[yearlyInterest.length - 1].totalAmount}`; 
 
+            // Tambahkan pemanggilan fungsi untuk membuat atau memperbarui grafik
+            if (!chartManager.chart) {
+                chartManager.createChart(yearlyInterest);
+            } else {
+                chartManager.updateChart(yearlyInterest);
+            }
         }
+    
     </script>
 </body>
 </html>
