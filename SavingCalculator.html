@@ -2,62 +2,104 @@
 
 <head>
     <h2>Study Case Saving Calculator</h2>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
     <form>
-        <input id="jumlahTabungan" type="number" placeholder="jumlah tabungan"></input> <br /><br />
-        <input id="bunga" type="number" placeholder="bunga"></input> <br /><br />
-        <input id="periode" type="number" placeholder="periode"></input> <br /><br />
+        <table>
+            <tr>
+                <td>Jumlah Tabungan</td>
+                <td>:</td>
+                <td><input id="jumlahTabungan" type="number" placeholder="jumlah tabungan"></input> <br /><br /></td>
+            </tr>
+            <tr>
+                <td>Bunga</td>
+                <td>:</td>
+                <td><input id="bunga" type="number" placeholder="bunga"></input> <br /><br /></td>
+            </tr>
+            <tr>
+                <td>Periode</td>
+                <td>:</td>
+                <td><input id="periode" type="number" placeholder="periode"></input> <br /><br /></td>
+            </tr>
+        </table>
         <button type="button" onclick="calculate()">Calculate Interest</button>
         <h3 id="total"></h3>
     </form>
+    <div style="width: 100%; height: 500px;"><canvas id="myChart"></canvas></div><br />
+    <script>
+        class savingCalculator {
+            constructor(initialAmount, interestRate, period) {
+                this.initialAmount = initialAmount;
+                this.interestRate = interestRate;
+                this.period = period;
+            }
+
+            get initialAmount() {
+                return this._initialAmount;
+            }
+
+            set initialAmount(value) {
+                return this._initialAmount = value;
+            }
+
+            get interestRate() {
+                return this._interestRate;
+            }
+
+            set interestRate(value) {
+                return this._interestRate = value;
+            }
+
+            get period() {
+                return this._period;
+            }
+
+            set period(value) {
+                return this._period = value;
+            }
+
+            calculateInterest() {
+                return ((this._initialAmount * (this._interestRate / 100) * this._period) / 12)
+            }
+        }
+        var totalElement = document.getElementById("total");
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart;
+
+        function calculate() {
+            let jumlahTabungan = parseFloat(document.getElementById("jumlahTabungan").value);
+            let bunga = parseFloat(document.getElementById("bunga").value);
+            let periode = parseFloat(document.getElementById("periode").value);
+            let saving = new savingCalculator(jumlahTabungan, bunga, periode);
+            let interest = saving.calculateInterest();
+            if (!isNaN(interest)) {
+                totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;
+                if (myChart) {
+                    myChart.data.labels = ['Initial Amount', 'Interest'];
+                    myChart.data.datasets[0].data = [jumlahTabungan, interest];
+                    myChart.update();
+                } else {
+                    myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Initial Amount', 'Interest'],
+                            datasets: [{
+                                label: 'Saving Calculator',
+                                data: [jumlahTabungan, interest],
+                                backgroundColor: ['blue', 'green'],
+                            }]
+                        },
+                    });
+                }
+            } else {
+                totalElement.innerHTML = 'Rp 0'
+            }
+            
+        }
+
+    </script>
 </body>
-<script>
-    class savingCalculator {
-        constructor(initialAmount, interestRate, period) {
-            this.initialAmount = initialAmount;
-            this.interestRate = interestRate;
-            this.period = period;
-        }
-
-        get initialAmount() {
-            return this._initialAmount;
-        }
-
-        set initialAmount(value) {
-            return this._initialAmount = value;
-        }
-
-        get interestRate() {
-            return this._interestRate;
-        }
-
-        set interestRate(value) {
-            return this._interestRate = value;
-        }
-
-        get period() {
-            return this._period;
-        }
-
-        set period(value) {
-            return this._period = value;
-        }
-
-        calculateInterest() {
-            return ((this._initialAmount * (this._interestRate / 100) * this._period) / 12)
-        }
-    }
-    var totalElement = document.getElementById("total");
-    function calculate() {
-        let jumlahTabungan = parseFloat(document.getElementById("jumlahTabungan").value);
-        let bunga = parseFloat(document.getElementById("bunga").value);
-        let periode = parseFloat(document.getElementById("periode").value);
-        let saving = new savingCalculator(jumlahTabungan, bunga, periode);
-        isNaN(saving.calculateInterest()) ? totalElement.innerHTML = `Rp 0` : totalElement.innerHTML = `Rp ${saving.calculateInterest().toFixed(2)}`;
-    }
-
-</script>
 
 </html>
