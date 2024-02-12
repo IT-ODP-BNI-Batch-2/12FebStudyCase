@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>Kalkulator Simple</title>
+</head>
+<body>
+    <h2>Kalkulator Simple</h2>
+    <form>
+        <label for="n">Jumlah Tabungan:</label>
+        <input type="number" id="n" name="n" required><br><br>
+        
+        <label for="y">Bunga Per Tahun:</label>
+        <input type="number" id="y" name="y" required><br><br>
+        
+        <label for="z">Jangka Waktu dalam bulan:</label>
+        <input type="number" id="z" name="z" required><br><br>
+
+        <button type="button" onclick="hitungBunga()">Hitung Bunga Tabungan</button>
+    </form>
+
+    <p id="hasilBunga"></p>
+
+    <script>
+        class SavingCalculator {
+            constructor(initialAmount, interestRate, period) {
+                this._initialAmount = initialAmount;
+                this._interestRate = interestRate;
+                this._period = period;
+            }
+
+            get initialAmount() {
+                return this._initialAmount;
+            }
+
+            set initialAmount(value) {
+                this._initialAmount = value;
+            }
+
+            get interestRate() {
+                return this._interestRate;
+            }
+
+            set interestRate(value) {
+                this._interestRate = value;
+            }
+
+            get period() {
+                return this._period;
+            }
+
+            set period(value) {
+                this._period = value;
+            }
+
+            calculateInterest() {
+                // Implement the interest calculation logic here
+                // Formula: Interest = P * r * t / 100
+                return (this._initialAmount * this._interestRate * this._period / 100) /12;
+            }
+        }
+
+        function hitungBunga() {
+            var n = parseFloat(document.getElementById('n').value);
+            var y = parseFloat(document.getElementById('y').value);
+            var z = parseFloat(document.getElementById('z').value);
+
+            var calculator = new SavingCalculator(n, y, z);
+            var bunga = calculator.calculateInterest();
+
+            document.getElementById('hasilBunga').innerHTML = "Bunga yang didapat Rp. " + bunga.toFixed(2)+",-";
+        }
+    </script>
+</body>
+</html>
