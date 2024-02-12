@@ -6,13 +6,13 @@
 <body>
     <h2>Kalkulator Bunga Tabungan</h2>
     <form id="calculatorForm">
-        <label for="jumlahTabungan">Jumlah Tabungan (n):</label>
+        <label for="jumlahTabungan">Jumlah Tabungan:</label>
         <input type="number" id="jumlahTabungan" name="jumlahTabungan" required><br><br>
         
-        <label for="bungaPerTahun">Bunga Per Tahun (%):</label>
+        <label for="bungaPerTahun">Bunga Per Tahun:</label>
         <input type="number" id="bungaPerTahun" name="bungaPerTahun" required><br><br>
         
-        <label for="jangkaWaktu">Jangka Waktu (z) dalam tahun:</label>
+        <label for="jangkaWaktu">Jangka Waktu dalam bulan:</label>
         <input type="number" id="jangkaWaktu" name="jangkaWaktu" required><br><br>
 
         <button type="button" onclick="hitungBunga()">Hitung Bunga Tabungan</button>
@@ -67,7 +67,7 @@
             var calculator = new SavingCalculator(jumlahTabungan, bungaPerTahun, jangkaWaktu);
             var bunga = calculator.calculateInterest();
 
-            document.getElementById('hasilBunga').innerHTML = "Bunga tabungan adalah: " + bunga.toFixed(2);
+            document.getElementById('hasilBunga').innerHTML = "Bunga tabungan yang akan diterima perbulan adalah: IDR. " + bunga.toFixed(2);
         }
     </script>
 </body>
