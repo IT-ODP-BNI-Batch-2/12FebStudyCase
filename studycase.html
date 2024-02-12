@@ -68,8 +68,9 @@ function calculateInterest() {
 
     const interest = calculator.calculateInterest();
     const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `Interest Earned: $${interest.toFixed(2)}`;
+    isNaN(interest) ? resultElement.innerHTML = `$0` : resultElement.innerHTML = `$ ${interest.toFixed(2)}`
 }
+
     </script>
 </body>
 </html>
