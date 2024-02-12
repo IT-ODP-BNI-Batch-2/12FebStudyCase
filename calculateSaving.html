@@ -5,21 +5,12 @@
 </head>
 <body>
     <form id="savingsForm">
-        <label for="initialAmount">Initial Amount($): </label>
+        <label for="initialAmount">Initial Amount: </label>
         <input type="number" id="initialAmount" required step="0.01">
-    
-        <br>
-    
-        <label for="annualInterestRate">Interest Rate (%): </label>
+        <label for="annualInterestRate">Interest Rate: </label>
         <input type="number" id="interestRate" required step="0.01">
-    
-        <br>
-    
         <label for="savingPeriod">Periode: </label>
         <input type="number" id="period" required step="1">
-    
-        <br>
-    
         <button type="button" onclick="calculateInterest()">Hitung</button>
     </form>
 
