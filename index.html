@@ -6,15 +6,17 @@
 
 <form action="">
   <label for="savings">Initial Savings:</label><br>
-  <input type="number" id="savings" name="savings" value="Masukkan jumlah tabungan"><br>
+  <input type="number" id="savings" name="savings"><br>
   <label for="interest">Interest Rate:</label><br>
-  <input type="number" id="interest" name="interest" value="Masukkan tingkat bunga"><br>
+  <input type="number" step=".01" id="interest" name="interest"><br>
   <label for="period">Period:</label><br>
-  <input type="number" id="period" name="period" value="Masukkan periode tabungan"><br>
+  <input type="number" id="period" name="period"><br>
   <br>
-  <input type="submit" value="Calculate Interest">
+  <button type="button" onclick="runScript()">Calculate interest</button>
+  <br>
+  <br>
 </form> 
-
+<div id="result"></div>
 
 </body>
 
@@ -51,13 +53,19 @@
     }
 
     calculateInterest(){
-        return this._initialAmount * this._interestRate * this._period
+      return this._initialAmount * (this._interestRate/12) * this._period
     }
 }
-var initialAmount = document.getElementById("savings");
-var interestRate = document.getElementById("interest");
-var period = document.getElementById("period");
+function runScript(){
+  var initialAmount = parseFloat(document.getElementById('savings').value);
+  var interestRate = parseFloat(document.getElementById('interest').value);
+  var period = parseFloat(document.getElementById('period').value);
 
-
+  var calculator = new SavingsCalculator(initialAmount, interestRate, period);
+  var interest = calculator.calculateInterest();
+  //console.log(interest);
+  var resultElement = document.getElementById('result');
+  isNaN(interest) ? resultElement.innerHTML = `Rp 0` : resultElement.innerHTML = `Rp ${interest.toFixed(2)}`;
+}
 </script>
 </html>
