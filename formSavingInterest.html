@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mari Berhitung</title>
+    <title>Calculator Savings</title>
 </head>
 <body>
     <div >
-        <h2>Calculator Tabungan</h2>
+        <h2>Mari Berhitung</h2>
         <div>
-            <label for="nama"> Masukkan Nama : </label><br>
+            <label for="nama"> Masukkan Nama Nasabah : </label><br>
             <input type="nama"><br>
         </div>
         <div>
@@ -23,64 +23,68 @@
         <div>
             <label for="periodTab">Periode (Bulan):</label><br>
             <input type="number" id="periodTab" name="periodeTabungan">
+            
         </div>
-        <button id="hitungTab">Hitung Tabungan</button>
+        <br>
+        <button id="hitungTab">Hitung Tabungan</button> 
+        <br>
         <div id="hasil"></div>
         </div>
         <script>
-            // var jmlTabungan = document.getElementById("tabungan")
-            // var jmlBunga = document.getElementById("bungaTab")
-            // var jangkaWaktu = document.getElementById("periodTab")
-
             class SavingCalculator {
                 constructor(initialAmount, interestRate, period) {
-                    this.initialAmount = initialAmount;
-                    this.interestRate = interestRate;
-                    this.period = period
+                    this._initialAmount = initialAmount;
+                    this._interestRate = interestRate;
+                    this._period = period
                 }
 
                 get initialAmount() {
-                    return this.initialAmount;
+                    return this._initialAmount;
                 }
 
                 set initialAmount(value) {
-                    this.initialAmount = value;
+                    this._initialAmount = value;
                 }
 
                 get interestRate() {
-                    return this.interestRate;
+                    return this._interestRate;
                 }
 
                 set interestRate(value) {
-                    this.interestRate
+                    this._interestRate
                 }
 
                 get period() {
-                    return this.period;
+                    return this._period;
                 }
 
                 set period(value) {
-                    this.period = value;
+                    this._period = value;
                 }
 
                 calculateTotal() {
-                    totalInterest = (this.initialAmount * this.interestRate * this.period)/100
-                    const totalAmount = this.initialAmount + totalInterest;
+                    const totalInterest = (this._initialAmount * this._interestRate * this._period)/100
+                    // Rp. (20.000.000 * 1 * 12) = 2.400.000
+                    const totalAmount = this._initialAmount + totalInterest;
                     return totalAmount;
 
                 }
             }
             document.getElementById("hitungTab").addEventListener("click", function() {
+            
+            var jmlTabungan = document.getElementById("tabungan")
+            var jmlBunga = document.getElementById("bungaTab")
+            var jangkaWaktu = document.getElementById("periodTab")
 
-            let initialAmount = parseFloat(document.getElementById("tabungan").value);
-            let interestRate = parseFloat(document.getElementById("bungaTab").value);
-            let period = parseFloat(document.getElementById("periodTab").value);
+            let initialAmount = parseFloat(jmlTabungan.value);
+            let interestRate = parseFloat(jmlBunga.value);
+            let period = parseFloat(jangkaWaktu.value);
 
             let calculator = new SavingCalculator(initialAmount, interestRate, period);
             let total = calculator.calculateTotal();
 
             let hasilHitung = document.getElementById("hasil")
-            hasilHitung.innerHTML = "jumlah tabungan " + total.toFixed(2);
+            hasilHitung.innerHTML = "Jumlah tabungan : " + total.toFixed(2) + " dalam " + period + " Bulan";
 
             // document.getElementById("hasil").innerHTML = "Bunga tabungan setelah " + period + " tahun: " + total.toFixed(2);
         });    
