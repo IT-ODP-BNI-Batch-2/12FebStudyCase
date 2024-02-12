@@ -1,3 +1,40 @@
+let contextGraph;
+
+class ChartManager {
+  constructor() {}
+
+  createChart(data) {
+    const graphArea = document.getElementById("chart");
+
+    if (contextGraph !== undefined) {
+      contextGraph.destroy();
+    }
+
+    contextGraph = new Chart(graphArea, {
+      type: "bar",
+      data: {
+        labels: data.map((entry) => `Year ${entry.year}`),
+        datasets: [
+          {
+            label: "Yearly Interest",
+            data: data.map((entry) => entry.interest),
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  }
+}
+
 class SavingCalculator {
   constructor(initialAmount, interestRate, period) {
     this._initialAmount = initialAmount;
@@ -23,6 +60,31 @@ class SavingCalculator {
   }
   set period(value) {
     this._period = value;
+  }
+
+  calculateYearlyInterest() {
+    const yearlyInterest = [];
+    let totalAmount = this._initialAmount;
+
+    for (let year = 1; year <= this._period; year++) {
+      const interest = (totalAmount * this._interestRate) / 100;
+      totalAmount += interest;
+      yearlyInterest.push({
+        year,
+        interest: interest.toFixed(2),
+        totalAmount,
+      });
+    }
+
+    return yearlyInterest;
+  }
+
+  setCalculator() {
+    resetChart();
+    const chartInstance = new ChartManager();
+    const yearlyInterest = this.calculateYearlyInterest();
+
+    chartInstance.createChart(yearlyInterest);
   }
 
   calculateInterest() {
@@ -53,15 +115,23 @@ function getFormData(e) {
   );
 
   let result = calculatorInstance.calculateInterest();
+  calculatorInstance.setCalculator();
 
-  document.querySelector(".result").innerHTML = formatNumber(result);
+  document.getElementById("result").innerHTML = formatNumber(result);
 }
 
 document
   .getElementById("tabungan-form")
   .addEventListener("submit", getFormData);
 
+function resetChart() {
+  if (contextGraph !== undefined) {
+    contextGraph.destroy();
+  }
+}
+
 function resetForm() {
   document.getElementById("tabungan-form").reset();
-  document.querySelector(".result").innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+  resetChart();
 }
